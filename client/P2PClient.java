@@ -2,6 +2,7 @@ package client;
 import java.io.*;
 import java.net.*;
 
+// Test
 // Arguments à transmettre via la ligne de commande :
 // args[0] - l’adresse IP de l’hôte de l’application server.P2PServer ;
 // args[1] - le numéro de port de la socket d’écoute TCP de l’application server.P2PServer ;
