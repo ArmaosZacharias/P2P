@@ -1,8 +1,6 @@
 package server;
 import java.io.*;
 import java.net.*;
-// Arguments à transmettre via la ligne de commande :
-// - le numéro de port d’attachement de sa socket d’écoute TCP
 
 public class P2PServer {
     public static void main(String[] args) {

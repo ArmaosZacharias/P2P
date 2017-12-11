@@ -29,12 +29,12 @@ public class ThreadServer extends Thread {
                     System.out.println("Mauvais format de nombre!");
                     osw.write("Mauvais format de nombre");
                     osw.flush();
-                } catch (EOFException e) {
+                } /*catch (EOFException e) {
                     System.out.println("FIN du thread serveur");
                     fin = true;
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         } catch (IOException e) {
             System.out.println("Problème de communication " + e.toString());
