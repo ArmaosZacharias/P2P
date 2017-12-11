@@ -1,7 +1,8 @@
 package client;
-
+import comServerClient.*;
 import java.io.*;
 import java.net.*;
+
 
 public class P2PClient {
     
@@ -28,12 +29,12 @@ public class P2PClient {
         }
 
         File repertoire = new File(args[2]); // chemin vers le répertoire contenant les fichiers de l’application P2PClient
-        String [] listeRepertoire = repertoire.list(); // récupération du répertoire à partir du chemin du fichier
-        for (int i = 0; i <= repertoire.length(); i++) { // affiche la liste du répertoire
-            System.out.println(listeRepertoire[i]);
-        }
+//        String [] listeRepertoire = repertoire.list(); // récupération du répertoire à partir du chemin du fichier
+//        for (int i = 0; i <= repertoire.length(); i++) { // affiche la liste du répertoire
+//            System.out.println(listeRepertoire[i]);
+//        }         <<<<<<<<<<<<<<<<<<<Normalement on a plus besoin de ça avec les ListFileServer et Client
 
-        if (!repertoire.exists()) {
+        if(!repertoire.isDirectory()){
             System.out.println("Le répertoire n'existe pas");
             System.exit(2);
         }
@@ -49,7 +50,8 @@ public class P2PClient {
                 System.out.println("Entrer votre requête : ");
                 line = br.readLine();
                 if (line.length() != 0){
-                    
+                    ListFileClient lfc=new ListFileClient(repertoire);
+                    lfc.afficherList();
                 }
 
             } while (line.length() != 0);
