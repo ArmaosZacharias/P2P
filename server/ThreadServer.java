@@ -8,7 +8,6 @@ public class ThreadServer extends Thread {
     public ThreadServer(Socket comm) {
         this.sockComm = comm;
     }
-
     public void run() {
         InputStream is;
         OutputStream os;
@@ -23,6 +22,7 @@ public class ThreadServer extends Thread {
             boolean fin = false;
             while (!fin) {
                 try {
+
 
 
                 } catch (NumberFormatException e) {
@@ -42,7 +42,7 @@ public class ThreadServer extends Thread {
             try {
                 if (sockComm != null)
                     sockComm.close();
-            } catch (IOException e) {
+            } catch(IOException e) {
                 e.printStackTrace();
                 System.out.println("Erreur IO2");
             }
