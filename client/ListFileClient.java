@@ -1,5 +1,5 @@
 package client;
-import comServerClient.*;
+import comServClient.*;
 import java.io.*;
 import java.util.*;
 
