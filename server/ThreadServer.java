@@ -62,7 +62,6 @@ public class ThreadServer extends Thread {
                     else{
                         oos.writeInt(1);  //renvoie le cas "help"
                     }
-                    
                 } catch (NumberFormatException e) {
                     System.out.println("Mauvais format de nombre!");
                     oos.writeUTF("Mauvais format de nombre");

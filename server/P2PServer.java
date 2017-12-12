@@ -7,6 +7,7 @@ public class P2PServer {
         int portServ = 0;
         Socket sockComm = null;
         ServerSocket sockConn = null; // socket d’écoute TCP
+        ThreadServer th;
         try {
             portServ = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
@@ -27,7 +28,8 @@ public class P2PServer {
             while (true) {
                 sockComm = sockConn.accept();
                 System.out.println("DEBUG : ip client : " + sockComm.getInetAddress().getHostAddress() + ", port client : " + sockComm.getPort());
-
+                th = new ThreadServer(sockComm);
+                th.start();
             }
         } catch(IOException e) {
             e.printStackTrace();

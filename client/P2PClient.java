@@ -75,7 +75,6 @@ public class P2PClient {
                 else {
                     System.out.println("Requête vide.");
                 }
-
             } while (requete.length() != 0);
         }
         catch (IOException e) {
