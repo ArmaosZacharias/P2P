@@ -56,6 +56,10 @@ public class P2PClient {
                     } else if (requeteTab[0].equals("get")) {
                         int num = Integer.parseInt(requeteTab[1]);
                         // téléchargement du fichier numéro <num> dans la liste des résultats
+                        // l’application P2PClient doit commencer par vérifier si elle ne possède pas déjà le fichier ciblé
+                        // Si elle ne le possède pas, elle doit envoyer une requête de « téléchargement » à l’application P2PServer.
+                        // En réponse, elle reçoit une liste contenant les adresses de toutes les applications
+                        // P2PClient qui possèdent le fichier à télécharger.
                     } else if (requeteTab[0].equals("list")) {
                         // affichage de la liste des fichiers
                     } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {

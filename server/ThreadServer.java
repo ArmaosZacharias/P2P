@@ -23,8 +23,6 @@ public class ThreadServer extends Thread {
             while (!fin) {
                 try {
 
-
-
                 } catch (NumberFormatException e) {
                     System.out.println("Mauvais format de nombre!");
                     osw.write("Mauvais format de nombre");

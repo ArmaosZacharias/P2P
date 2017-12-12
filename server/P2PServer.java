@@ -28,7 +28,6 @@ public class P2PServer {
                 sockComm = sockConn.accept();
                 System.out.println("DEBUG : ip client : " + sockComm.getInetAddress().getHostAddress() + ", port client : " + sockComm.getPort());
 
-
             }
         } catch(IOException e) {
             e.printStackTrace();
