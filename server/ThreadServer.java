@@ -11,22 +11,24 @@ public class ThreadServer extends Thread {
         this.sockComm = comm;
     }
     public void run() {
-        InputStream is=null;
-        OutputStream os=null;
-        ObjectInputStream ois=null;
-        ObjectOutputStream oos=null;
+        InputStream is;
+        OutputStream os;
+        ObjectInputStream ois;
+        ObjectOutputStream oos;
         try {
             is = sockComm.getInputStream();
             ois = new ObjectInputStream(new BufferedInputStream(is));
             os = sockComm.getOutputStream();
             oos = new ObjectOutputStream(new BufferedOutputStream(os));
-
+            oos.flush();
             boolean fin = false;
             while (!fin) {
                 try {
-                    String requete=ois.readUTF();
-                    TreeSet<P2PFile> resultatSearch=null;
+                    String requete = ois.readUTF();
+                    System.out.println("DEBUG: réception de la requete: " + requete);
+                    TreeSet<P2PFile> resultatSearch = null;
                     String requeteTab [] = requete.split(" ");
+                    System.out.println("DEBUG: Split: requeteTab[0] = " + requeteTab[0] + ", requeteTab[1] = " + requeteTab[1]);
                     if (requeteTab[0].equals("search")) {
                         String pattern = requeteTab[1];
                         // instructions de recherche du <pattern> dans la liste des fichiers
@@ -37,10 +39,12 @@ public class ThreadServer extends Thread {
                             }
                             catch(NumberFormatException e){
                                 oos.writeInt(1);  //renvoie le cas "help"
+                                oos.flush();
                             }
                         }
                         else{
                             oos.writeInt(2);  //renvoie le cas "search first"
+                            oos.flush();
                         }
                         // téléchargement du fichier numéro <num> dans la liste des résultats
                         // l’application P2PClient doit commencer par vérifier si elle ne possède pas déjà le fichier ciblé
@@ -50,19 +54,23 @@ public class ThreadServer extends Thread {
                     } else if (requeteTab[0].equals("list")) {
                         if(resultatSearch!=null){
                             oos.writeInt(4);  //renvoie le cas "list"
+                            oos.flush();
                         }
                         else{
                             oos.writeInt(2);  //renvoie le cas "search first"
+                            oos.flush();
                         }
                     } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
                         oos.writeInt(5);  //renvoie le cas "local list"
+                        oos.flush();
                     } else if (requeteTab[0].equals("quit")) {
                         oos.writeInt(3);  //renvoie le cas "quit"
+                        oos.flush();
                     }
-                    else{
+                    else {
                         oos.writeInt(1);  //renvoie le cas "help"
+                        oos.flush();
                     }
-                    oos.flush();
                 } catch (NumberFormatException e) {
                     System.out.println("Mauvais format de nombre!");
                     oos.writeUTF("Mauvais format de nombre");
@@ -78,7 +86,6 @@ public class ThreadServer extends Thread {
             System.out.println("Problème de communication " + e.toString());
         } finally {
             try {
-                System.out.println("Fermeture des connexions");
                 if (sockComm != null)
                     sockComm.close();
             } catch(IOException e) {
