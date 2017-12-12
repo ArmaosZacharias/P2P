@@ -22,6 +22,7 @@ public class ThreadServer extends Thread {
             boolean fin = false;
             while (!fin) {
                 try {
+                    // réception de la requête
 
                 } catch (NumberFormatException e) {
                     System.out.println("Mauvais format de nombre!");

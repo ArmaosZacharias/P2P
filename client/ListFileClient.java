@@ -3,7 +3,6 @@ import comServClient.*;
 import java.io.*;
 import java.util.*;
 
-
 public class ListFileClient {
     private TreeSet<P2PFile> fileList;
     
