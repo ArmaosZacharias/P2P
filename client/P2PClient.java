@@ -9,8 +9,8 @@ public class P2PClient {
         String ipServ ;
         int portServ = 0 ;
         Socket sockComm = null;
-        ServerSocket sockConn = null;
-        String line;
+        ServerSocket sockConn = null; // socket d’écoute TCP
+        String requete;
         
         if (args.length != 3) {
             System.out.println("Nombre d'arguments non valide !");
@@ -47,12 +47,27 @@ public class P2PClient {
 
             do {
                 System.out.println("Entrer votre requête : ");
-                line = br.readLine();
-                if (line.length() != 0){
-                    
+                requete = br.readLine();
+                if (requete.length() != 0){
+                    String requeteTab [] = requete.split(" ");
+                    if (requeteTab[0].equals("search")) {
+                        String pattern = requeteTab[1];
+                        // instructions de recherche du <pattern> dans la liste des fichiers
+                    } else if (requeteTab[0].equals("get")) {
+                        int num = Integer.parseInt(requeteTab[1]);
+                        // téléchargement du fichier numéro <num> dans la liste des résultats
+                    } else if (requeteTab[0].equals("list")) {
+                        // affichage de la liste des fichiers
+                    } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
+                        // affichage de la liste locale des fichiers
+                    } else if (requeteTab[0].equals("quit")) {
+                        System.exit(3);
+                    }
+                } else {
+                    System.out.println("Requête vide.");
                 }
 
-            } while (line.length() != 0);
+            } while (requete.length() != 0);
         }
         catch (IOException e) {
             e.printStackTrace();

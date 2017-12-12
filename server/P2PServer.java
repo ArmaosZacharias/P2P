@@ -5,8 +5,8 @@ import java.net.*;
 public class P2PServer {
     public static void main(String[] args) {
         int portServ = 0;
-        ServerSocket sockConn = null;
         Socket sockComm = null;
+        ServerSocket sockConn = null; // socket d’écoute TCP
         try {
             portServ = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
