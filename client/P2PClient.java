@@ -1,7 +1,8 @@
 package client;
-
+import comServClient.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 public class P2PClient {
     
@@ -10,7 +11,10 @@ public class P2PClient {
         int portServ = 0 ;
         Socket sockComm = null;
         ServerSocket sockConn = null; // socket d’écoute TCP
+        ObjectInputStream ois;
+        ObjectOutputStream oos;
         String requete;
+        ListFileClient lfc;
         
         if (args.length != 3) {
             System.out.println("Nombre d'arguments non valide !");
@@ -28,20 +32,13 @@ public class P2PClient {
         }
 
         File repertoire = new File(args[2]); // chemin vers le répertoire contenant les fichiers de l’application P2PClient
-        String [] listeRepertoire = repertoire.list(); // récupération du répertoire à partir du chemin du fichier
-        for (int i = 0; i <= repertoire.length(); i++) { // affiche la liste du répertoire
-            System.out.println(listeRepertoire[i]);
-        }
-
-        if (!repertoire.exists()) {
+        if (!repertoire.exists()&&!repertoire.isDirectory()) {
             System.out.println("Le répertoire n'existe pas");
             System.exit(2);
         }
+        lfc=new ListFileClient(repertoire);
 
         try {
-            sockComm = new Socket(ipServ, portServ);
-            System.out.println("IP locale " + sockComm.getLocalAddress().getHostAddress()); // l’IP de l’hôte qui l’héberge
-            System.out.println("Port local " + sockComm.getLocalPort());
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(isr);
 
@@ -49,25 +46,33 @@ public class P2PClient {
                 System.out.println("Entrer votre requête : ");
                 requete = br.readLine();
                 if (requete.length() != 0){
-                    String requeteTab [] = requete.split(" ");
-                    if (requeteTab[0].equals("search")) {
-                        String pattern = requeteTab[1];
-                        // instructions de recherche du <pattern> dans la liste des fichiers
-                    } else if (requeteTab[0].equals("get")) {
-                        int num = Integer.parseInt(requeteTab[1]);
-                        // téléchargement du fichier numéro <num> dans la liste des résultats
-                        // l’application P2PClient doit commencer par vérifier si elle ne possède pas déjà le fichier ciblé
-                        // Si elle ne le possède pas, elle doit envoyer une requête de « téléchargement » à l’application P2PServer.
-                        // En réponse, elle reçoit une liste contenant les adresses de toutes les applications
-                        // P2PClient qui possèdent le fichier à télécharger.
-                    } else if (requeteTab[0].equals("list")) {
-                        // affichage de la liste des fichiers
-                    } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
-                        // affichage de la liste locale des fichiers
-                    } else if (requeteTab[0].equals("quit")) {
-                        System.exit(3);
+                    try{
+                        sockComm = new Socket(ipServ, portServ);
+                        oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
+                        ois=new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
+                        oos.writeObject(requete);
+                        oos.flush();
+                        
+                        int reponse=ois.readInt();
+                        if(reponse==1){   //cas 'help'
+                            System.out.println("Commande inconnue, essayez : \n- 'search <pattern>' pour récupérer la liste des fichiers dont le nom contient <pattern>\n- 'get <num>' pour télécharger le fichier numéro <num> de la liste obtenue vià le search\n - 'list' permet d'afficher la liste courante\n - 'local list' permet d'afficher la liste de vos fichiers");
+                        } else if(reponse==2){   //cas 'search first'
+                            System.out.println("Veuillez d'abord effectuer un search");
+                        } else if(reponse==3){   //cas 'quit'
+                            System.out.println("Vous quittez l'application");
+                            System.exit(3);
+                        } else if(reponse==4){ //cas 'list'
+                            //System.out.println(ois.readUTF());
+                        } else if(reponse==5){  //cas 'local list'
+                            lfc.afficherList();
+                        }
                     }
-                } else {
+                    catch(IOException e){
+                        System.out.println(e.getMessage());
+                    }
+                    
+                }
+                else {
                     System.out.println("Requête vide.");
                 }
 

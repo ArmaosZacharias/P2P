@@ -25,7 +25,7 @@ public class ListFileClient {
     
     public void afficherList(){
         for(P2PFile f : fileList){
-            System.out.println(f.getFile().getName()+"   "+f.getTaille()+" octets");
+            System.out.println("- "+f.getFile().getName()+"\t\t"+f.getTaille()+" octets");
         }
     }
     
