@@ -50,7 +50,7 @@ public class P2PClient {
                         sockComm = new Socket(ipServ, portServ);
                         oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
                         ois=new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
-                        oos.writeObject(requete);
+                        oos.writeUTF(requete);
                         oos.flush();
                         
                         int reponse=ois.readInt();

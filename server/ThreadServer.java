@@ -25,6 +25,7 @@ public class ThreadServer extends Thread {
             while (!fin) {
                 try {
                     String requete=ois.readUTF();
+                    System.out.println("DEBUG");
                     TreeSet<P2PFile> resultatSearch=null;
                     String requeteTab [] = requete.split(" ");
                     if (requeteTab[0].equals("search")) {
