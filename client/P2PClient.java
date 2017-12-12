@@ -11,8 +11,8 @@ public class P2PClient {
         int portServ = 0 ;
         Socket sockComm = null;
         ServerSocket sockConn = null; // socket d’écoute TCP
-        ObjectInputStream ois;
-        ObjectOutputStream oos;
+        ObjectInputStream ois=null;
+        ObjectOutputStream oos=null;
         String requete;
         ListFileClient lfc;
         
@@ -49,9 +49,9 @@ public class P2PClient {
                     try{
                         sockComm = new Socket(ipServ, portServ);
                         oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
-                        ois=new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
                         oos.writeUTF(requete);
                         oos.flush();
+                        ois=new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
                         
                         int reponse=ois.readInt();
                         if(reponse==1){   //cas 'help'

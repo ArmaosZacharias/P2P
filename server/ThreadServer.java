@@ -11,21 +11,20 @@ public class ThreadServer extends Thread {
         this.sockComm = comm;
     }
     public void run() {
-        InputStream is;
-        OutputStream os;
-        ObjectInputStream ois;
-        ObjectOutputStream oos;
+        InputStream is=null;
+        OutputStream os=null;
+        ObjectInputStream ois=null;
+        ObjectOutputStream oos=null;
         try {
             is = sockComm.getInputStream();
             ois = new ObjectInputStream(new BufferedInputStream(is));
             os = sockComm.getOutputStream();
             oos = new ObjectOutputStream(new BufferedOutputStream(os));
-            oos.flush();
+
             boolean fin = false;
             while (!fin) {
                 try {
                     String requete=ois.readUTF();
-                    System.out.println("DEBUG");
                     TreeSet<P2PFile> resultatSearch=null;
                     String requeteTab [] = requete.split(" ");
                     if (requeteTab[0].equals("search")) {
@@ -63,6 +62,7 @@ public class ThreadServer extends Thread {
                     else{
                         oos.writeInt(1);  //renvoie le cas "help"
                     }
+                    oos.flush();
                 } catch (NumberFormatException e) {
                     System.out.println("Mauvais format de nombre!");
                     oos.writeUTF("Mauvais format de nombre");
@@ -78,6 +78,7 @@ public class ThreadServer extends Thread {
             System.out.println("Problème de communication " + e.toString());
         } finally {
             try {
+                System.out.println("Fermeture des connexions");
                 if (sockComm != null)
                     sockComm.close();
             } catch(IOException e) {
