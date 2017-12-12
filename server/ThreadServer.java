@@ -28,7 +28,6 @@ public class ThreadServer extends Thread {
                     System.out.println("DEBUG: réception de la requete: " + requete);
                     TreeSet<P2PFile> resultatSearch = null;
                     String requeteTab [] = requete.split(" ");
-                    System.out.println("DEBUG: Split: requeteTab[0] = " + requeteTab[0] + ", requeteTab[1] = " + requeteTab[1]);
                     if (requeteTab[0].equals("search")) {
                         String pattern = requeteTab[1];
                         // instructions de recherche du <pattern> dans la liste des fichiers
