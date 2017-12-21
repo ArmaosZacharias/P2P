@@ -8,22 +8,26 @@ public class P2PServer {
         Socket sockComm = null;
         ServerSocket sockConn = null; // socket d’écoute TCP
         ThreadServer th;
+
         try {
             portServ = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
             System.out.println("Numero de port non valide");
             System.exit(1);
         }
+
         if (portServ < 1024 || portServ > 65535) {
             System.out.println("Numero de port non autorise ou non valide");
             System.exit(1);
         }
+
         try {
             sockConn = new ServerSocket(portServ);
         } catch (IOException e) {
             System.out.println("Problème creation serveur : " + e.toString());
             System.exit(1);
         }
+
         try {
             while (true) {
                 sockComm = sockConn.accept();
@@ -36,8 +40,9 @@ public class P2PServer {
             System.out.println("Problème connexion client : " + e.toString());
         } finally {
             try {
-                if (sockConn != null)
+                if (sockConn != null) {
                     sockConn.close();
+                }
             } catch(IOException e) {
                 e.printStackTrace();
                 System.out.println("Erreur IO2");

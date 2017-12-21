@@ -1,4 +1,5 @@
 package client;
+
 import comServClient.*;
 import java.io.*;
 import java.util.*;
@@ -6,8 +7,8 @@ import java.util.*;
 public class ListFileClient {
     private TreeSet<P2PFile> fileList;
     
-    public ListFileClient(File folder){
-        fileList=new TreeSet<P2PFile>();
+    public ListFileClient(File folder) {
+        fileList = new TreeSet<P2PFile>();
         listFilesFolder(folder);
     }
     
@@ -22,12 +23,14 @@ public class ListFileClient {
         }
     }
     
-    public void afficherList(){
+    public void afficherList() {
         for(P2PFile f : fileList){
             System.out.println("- "+f.getFile().getName()+"\t\t"+f.getTaille()+" octets");
         }
     }
     
-    public TreeSet<P2PFile> getFileList(){ return fileList; }
+    public TreeSet<P2PFile> getFileList() {
+        return fileList;
+    }
 }
 

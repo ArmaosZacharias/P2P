@@ -1,8 +1,8 @@
 package client;
-import comServClient.*;
+
 import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class P2PClient {
     
@@ -11,8 +11,8 @@ public class P2PClient {
         int portServ = 0 ;
         Socket sockComm = null;
         ServerSocket sockConn = null; // socket d’écoute TCP
-        ObjectInputStream ois=null;
-        ObjectOutputStream oos=null;
+        ObjectInputStream ois = null;
+        ObjectOutputStream oos = null;
         String requete;
         ListFileClient lfc;
         
@@ -25,18 +25,19 @@ public class P2PClient {
 
         try {
             portServ = Integer.parseInt(args[1]); // n° de port de la socket d’écoute TCP de l’application P2PServer
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("Numéro de port non valide !");
             System.exit(1);
         }
 
         File repertoire = new File(args[2]); // chemin vers le répertoire contenant les fichiers de l’application P2PClient
+
         if (!repertoire.exists()&&!repertoire.isDirectory()) {
             System.out.println("Le répertoire n'existe pas");
             System.exit(2);
         }
-        lfc=new ListFileClient(repertoire);
+
+        lfc = new ListFileClient(repertoire);
 
         try {
             InputStreamReader isr = new InputStreamReader(System.in);
@@ -46,15 +47,15 @@ public class P2PClient {
                 System.out.println("Entrer votre requête : ");
                 requete = br.readLine();
                 if (requete.length() != 0){
-                    try{
+                    try {
                         sockComm = new Socket(ipServ, portServ);
                         oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
                         oos.writeUTF(requete);
                         oos.flush();
-                        ois=new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
+                        ois = new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
                         
-                        int reponse=ois.readInt();
-                        if(reponse==1){   //cas 'help'
+                        int reponse = ois.readInt();
+                        if(reponse == 1){   //cas 'help'
                             System.out.println("Commande inconnue, essayez : \n- 'search <pattern>' pour récupérer la liste des fichiers dont le nom contient <pattern>\n- 'get <num>' pour télécharger le fichier numéro <num> de la liste obtenue vià le search\n - 'list' permet d'afficher la liste courante\n - 'local list' permet d'afficher la liste de vos fichiers");
                         } else if(reponse==2){   //cas 'search first'
                             System.out.println("Veuillez d'abord effectuer un search");
@@ -66,18 +67,14 @@ public class P2PClient {
                         } else if(reponse==5){  //cas 'local list'
                             lfc.afficherList();
                         }
-                    }
-                    catch(IOException e){
+                    } catch(IOException e){
                         System.out.println(e.getMessage());
                     }
-                    
-                }
-                else {
+                } else {
                     System.out.println("Requête vide.");
                 }
             } while (requete.length() != 0);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
