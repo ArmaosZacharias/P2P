@@ -40,6 +40,11 @@ public class P2PClient {
         lfc = new ListFileClient(repertoire);
 
         try {
+            sockComm = new Socket(ipServ, portServ);
+            oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
+            oos.writeObject(repertoire);
+            oos.flush();
+            ois = new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(isr);
 
@@ -48,11 +53,8 @@ public class P2PClient {
                 requete = br.readLine();
                 if (requete.length() != 0){
                     try {
-                        sockComm = new Socket(ipServ, portServ);
-                        oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
                         oos.writeUTF(requete);
                         oos.flush();
-                        ois = new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
                         
                         int reponse = ois.readInt();
                         if(reponse == 1){   //cas 'help'

@@ -7,9 +7,11 @@ import java.util.*;
 
 public class ThreadServer extends Thread {
     private Socket sockComm = null;
+    private ListFileServer lfs=null;
 
-    public ThreadServer(Socket comm) {
+    public ThreadServer(Socket comm, ListFileServer list) {
         this.sockComm = comm;
+        this.lfs=list;
     }
 
     public void run() {
@@ -24,75 +26,86 @@ public class ThreadServer extends Thread {
             os = sockComm.getOutputStream();
             oos = new ObjectOutputStream(new BufferedOutputStream(os));
             oos.flush();
-            boolean fin = false;
+            File list;
+            try{
+                list=(File)ois.readObject();
+                lfs.addFiles(sockComm.getInetAddress().getHostAddress(), list);
+                boolean fin = false;
 
-            while (!fin) {
-                try {
-                    String requete = ois.readUTF();
-                    System.out.println("DEBUG: réception de la requete: " + requete);
-                    TreeSet<P2PFile> resultatSearch = null;
-                    String requeteTab [] = requete.split(" ");
+                while (!fin) {
+                    try {
+                        String requete = ois.readUTF();
+                        System.out.println("DEBUG: réception de la requete: " + requete);
+                        TreeSet<P2PFile> resultatSearch = null;
+                        String requeteTab [] = requete.split(" ");
 
-                    if (requeteTab[0].equals("search")) {
-                        String pattern = requeteTab[1];
-                        // instructions de recherche du <pattern> dans la liste des fichiers
-                    } else if (requeteTab[0].equals("get")) {
-                        if (resultatSearch!=null) {
-                            try {
-                                int num = Integer.parseInt(requeteTab[1]);
-                            } catch (NumberFormatException e) {
-                                oos.writeInt(1);  //renvoie le cas "help"
+                        if (requeteTab[0].equals("search")) {
+                            String pattern = requeteTab[1];
+                            // instructions de recherche du <pattern> dans la liste des fichiers
+                        } else if (requeteTab[0].equals("get")) {
+                            if (resultatSearch!=null) {
+                                try {
+                                    int num = Integer.parseInt(requeteTab[1]);
+                                } catch (NumberFormatException e) {
+                                    oos.writeInt(1);  //renvoie le cas "help"
+                                    oos.flush();
+                                }
+                            } else {
+                                oos.writeInt(2);  //renvoie le cas "search first"
                                 oos.flush();
                             }
+                            // téléchargement du fichier numéro <num> dans la liste des résultats
+                            // l’application P2PClient doit commencer par vérifier si elle ne possède pas déjà le fichier ciblé
+                            // Si elle ne le possède pas, elle doit envoyer une requête de « téléchargement » à l’application P2PServer.
+                            // En réponse, elle reçoit une liste contenant les adresses de toutes les applications
+                            // P2PClient qui possèdent le fichier à télécharger.
+                        } else if (requeteTab[0].equals("list")) {
+                            if (resultatSearch!=null) {
+                                oos.writeInt(4);  //renvoie le cas "list"
+                                oos.flush();
+                            } else {
+                                oos.writeInt(2);  //renvoie le cas "search first"
+                                oos.flush();
+                            }
+                        } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
+                            oos.writeInt(5);  //renvoie le cas "local list"
+                            oos.flush();
+                        } else if (requeteTab[0].equals("quit")) {
+                            oos.writeInt(3);  //renvoie le cas "quit"
+                            oos.flush();
                         } else {
-                            oos.writeInt(2);  //renvoie le cas "search first"
+                            oos.writeInt(1);  //renvoie le cas "help"
                             oos.flush();
                         }
-                        // téléchargement du fichier numéro <num> dans la liste des résultats
-                        // l’application P2PClient doit commencer par vérifier si elle ne possède pas déjà le fichier ciblé
-                        // Si elle ne le possède pas, elle doit envoyer une requête de « téléchargement » à l’application P2PServer.
-                        // En réponse, elle reçoit une liste contenant les adresses de toutes les applications
-                        // P2PClient qui possèdent le fichier à télécharger.
-                    } else if (requeteTab[0].equals("list")) {
-                        if (resultatSearch!=null) {
-                            oos.writeInt(4);  //renvoie le cas "list"
-                            oos.flush();
-                        } else {
-                            oos.writeInt(2);  //renvoie le cas "search first"
-                            oos.flush();
-                        }
-                    } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
-                        oos.writeInt(5);  //renvoie le cas "local list"
+                    } catch (NumberFormatException e) {
+                        System.out.println("Mauvais format de nombre!");
+                        oos.writeUTF("Mauvais format de nombre");
                         oos.flush();
-                    } else if (requeteTab[0].equals("quit")) {
-                        oos.writeInt(3);  //renvoie le cas "quit"
-                        oos.flush();
-                    } else {
-                        oos.writeInt(1);  //renvoie le cas "help"
-                        oos.flush();
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Mauvais format de nombre!");
-                    oos.writeUTF("Mauvais format de nombre");
-                    oos.flush();
-                } /*catch (EOFException e) {
-                    System.out.println("FIN du thread serveur");
-                    fin = true;
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }*/
-            }
-        } catch (IOException e) {
-            System.out.println("Problème de communication " + e.toString());
-        } finally {
-            try {
-                if (sockComm != null) {
-                    sockComm.close();
+                    } /*catch (EOFException e) {
+                        System.out.println("FIN du thread serveur");
+                        fin = true;
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }*/
                 }
-            } catch(IOException e) {
-                e.printStackTrace();
-                System.out.println("Erreur IO2");
+            } catch (IOException e) {
+                System.out.println("Problème de communication " + e.toString());
+            } finally {
+                try {
+                    if (sockComm != null) {
+                        sockComm.close();
+                    }
+                } catch(IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Erreur IO2");
+                }
             }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        catch(ClassNotFoundException e){
+            e.printStackTrace();
         }
     }
 }

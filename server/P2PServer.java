@@ -27,12 +27,13 @@ public class P2PServer {
             System.out.println("Problème creation serveur : " + e.toString());
             System.exit(1);
         }
+        ListFileServer lsf=new ListFileServer();
 
         try {
             while (true) {
                 sockComm = sockConn.accept();
                 System.out.println("DEBUG : ip client : " + sockComm.getInetAddress().getHostAddress() + ", port client : " + sockComm.getPort());
-                th = new ThreadServer(sockComm);
+                th = new ThreadServer(sockComm, lsf);
                 th.start();
             }
         } catch(IOException e) {
