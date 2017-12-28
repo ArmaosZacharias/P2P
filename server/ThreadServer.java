@@ -68,6 +68,7 @@ public class ThreadServer extends Thread {
                                 oos.flush();
                             }
                         } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
+                            lfs.afficherList();
                             oos.writeInt(5);  //renvoie le cas "local list"
                             oos.flush();
                         } else if (requeteTab[0].equals("quit")) {
