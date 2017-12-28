@@ -22,4 +22,8 @@ public class P2PFile implements Comparable<P2PFile> {
     public int compareTo(P2PFile f) {
         return this.getFile().compareTo(f.getFile());
     }
+    
+    public boolean equals(P2PFile f){
+        return this.getFile().equals(f.getFile());
+    }
 }
