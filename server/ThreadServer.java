@@ -29,7 +29,7 @@ public class ThreadServer extends Thread {
             File list;
             try{
                 list=(File)ois.readObject();
-                lfs.addFiles(sockComm.getInetAddress().getHostAddress(), list);
+                lfs.addFiles(sockComm.getInetAddress().getHostAddress()+":"+sockComm.getPort(), list);
                 boolean fin = false;
 
                 while (!fin) {

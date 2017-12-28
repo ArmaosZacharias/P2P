@@ -17,20 +17,33 @@ public class ListFileServer {
                 addFiles(ip, f);
             }
             else{
-                ArrayList ipAndFile = new ArrayList();
-                ipAndFile.add(ip);
-                ipAndFile.add(new P2PFile(f));
-                listClientFichier.add(ipAndFile);
+                int contient=-1;
+                for(int i=0;i<listClientFichier.size();i++){
+                    if(((P2PFile)((ArrayList)listClientFichier.get(i)).get(0)).equals(new P2PFile(f))){
+                        contient=i;
+                    }
+                }
+                if(contient==-1){
+                    ArrayList ipAndFile = new ArrayList();
+                    ipAndFile.add(new P2PFile(f));                    
+                    ipAndFile.add(ip);
+                    listClientFichier.add(ipAndFile);
+                }
+                else{
+                    ((ArrayList)listClientFichier.get(contient)).add(ip);
+                }
             }
         }
     }
     
     public void afficherList() {
         for(int i=0;i<listClientFichier.size();i++){
-            String ip = (String)((ArrayList)listClientFichier.get(i)).get(0);
-            P2PFile f = (P2PFile)((ArrayList)listClientFichier.get(i)).get(1);
-            
-            System.out.println("- "+f.getFile().getName()+"\t\t"+f.getTaille()+" octets\t\t"+ip);
+            P2PFile f = (P2PFile)((ArrayList)listClientFichier.get(i)).get(0);
+            String owners="";
+            for(int j=1;j<((ArrayList)listClientFichier.get(i)).size();j++){
+                owners+=((String)((ArrayList)listClientFichier.get(i)).get(j))+";";
+            }
+            System.out.println("- "+f.getFile().getName()+"\t\t"+f.getTaille()+" octets\t\t"+owners);
         }
     }
     
