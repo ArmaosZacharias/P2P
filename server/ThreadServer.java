@@ -27,6 +27,7 @@ public class ThreadServer extends Thread {
             oos = new ObjectOutputStream(new BufferedOutputStream(os));
             oos.flush();
             File list;
+            String resultatSearch = null;
             try{
                 list=(File)ois.readObject();
                 lfs.addFiles(sockComm.getInetAddress().getHostAddress()+":"+sockComm.getPort(), list);
@@ -36,12 +37,14 @@ public class ThreadServer extends Thread {
                     try {
                         String requete = ois.readUTF();
                         System.out.println("DEBUG: réception de la requete: " + requete);
-                        TreeSet<P2PFile> resultatSearch = null;
                         String requeteTab [] = requete.split(" ");
 
                         if (requeteTab[0].equals("search")) {
                             String pattern = requeteTab[1];
-                            // instructions de recherche du <pattern> dans la liste des fichiers
+                            resultatSearch=lfs.chercherList(pattern);
+                            oos.writeInt(4); //renvoie le cas "list"
+                            oos.writeUTF(resultatSearch);
+                            oos.flush();
                         } else if (requeteTab[0].equals("get")) {
                             if (resultatSearch!=null) {
                                 try {
@@ -63,12 +66,13 @@ public class ThreadServer extends Thread {
                             if (resultatSearch!=null) {
                                 oos.writeInt(4);  //renvoie le cas "list"
                                 oos.flush();
+                                oos.writeUTF(resultatSearch);
+                                oos.flush();
                             } else {
                                 oos.writeInt(2);  //renvoie le cas "search first"
                                 oos.flush();
                             }
                         } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
-                            lfs.afficherList();
                             oos.writeInt(5);  //renvoie le cas "local list"
                             oos.flush();
                         } else if (requeteTab[0].equals("quit")) {

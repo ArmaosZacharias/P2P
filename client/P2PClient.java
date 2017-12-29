@@ -65,9 +65,12 @@ public class P2PClient {
                             System.out.println("Vous quittez l'application");
                             System.exit(3);
                         } else if(reponse==4){ //cas 'list'
-                            //System.out.println(ois.readUTF());
+                            System.out.println(ois.readUTF());
                         } else if(reponse==5){  //cas 'local list'
                             lfc.afficherList();
+                        } 
+                        else{
+                            System.out.println("Erreur, réessayer");
                         }
                     } catch(IOException e){
                         System.out.println(e.getMessage());

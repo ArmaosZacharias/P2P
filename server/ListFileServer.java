@@ -48,6 +48,21 @@ public class ListFileServer {
         }
     }
     
+    public String chercherList(String pattern) {
+        String res="";
+        for(int i=0;i<listClientFichier.size();i++){
+            P2PFile f = (P2PFile)((ArrayList)listClientFichier.get(i)).get(0);
+            if(f.getFile().getName().contains(pattern)){
+                String owners="";
+                for(int j=1;j<((ArrayList)listClientFichier.get(i)).size();j++){
+                    owners+=((String)((ArrayList)listClientFichier.get(i)).get(j))+";";
+                }
+                res+=i+". "+f.getFile().getName()+"\t\t"+f.getTaille()+" octets\t\t"+owners+"\n";
+            }
+        }
+        return res;
+    }
+    
 //    public  getFileList() {
 //        
 //    }
