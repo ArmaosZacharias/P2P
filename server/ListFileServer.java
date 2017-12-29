@@ -8,7 +8,8 @@ public class ListFileServer {
     private ArrayList listClientFichier;
     
     public ListFileServer() {
-        listClientFichier=new ArrayList(new ArrayList());     //Liste d'une ip d'un client et d'un fichier (P2PFile)
+        listClientFichier=new ArrayList(new ArrayList());     
+        //Chaque sous-liste de la liste listClientFichier a pour premier attribut le fichier (P2PFile) et les atributs suivants sont la liste des personnes ayant le fichier
     }
     
     public void addFiles(String ip, File rep) {
