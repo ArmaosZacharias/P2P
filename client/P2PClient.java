@@ -63,7 +63,9 @@ public class P2PClient {
                         } else if(reponse==2){   //cas 'search first'
                             System.out.println("Veuillez d'abord effectuer un search");
                         } else if(reponse==3){   //cas 'quit'
-                            System.out.println("Vous quittez l'application");
+                            System.out.println("Vous quittez l'application...");
+                            oos.writeObject(new ListFile(lfc.getFileList()));
+                            oos.flush();
                             System.exit(3);
                         } else if(reponse==4){ //cas 'list'
                             System.out.println(ois.readUTF());

@@ -32,6 +32,23 @@ public class ListFileServer {
         }
     }
     
+    public void delFiles(String ip, ListFile files) {
+        for (P2PFile f : files.getFileList()) {
+            int contient=-1;
+            for(int i=0;i<listClientFichier.size();i++){
+                if(((P2PFile)((ArrayList)listClientFichier.get(i)).get(0)).equals(f)){
+                    contient=i;
+                }
+            }
+            if(contient!=-1){
+                ((ArrayList)listClientFichier.get(contient)).remove(ip);
+                if(((ArrayList)listClientFichier.get(contient)).size()==1){
+                    listClientFichier.remove(((ArrayList)listClientFichier.get(contient)));
+                }
+            }
+        }
+    }
+    
     public void afficherList() {
         for(int i=0;i<listClientFichier.size();i++){
             P2PFile f = (P2PFile)((ArrayList)listClientFichier.get(i)).get(0);
@@ -57,9 +74,5 @@ public class ListFileServer {
         }
         return res;
     }
-    
-//    public  getFileList() {
-//        
-//    }
 }
 
