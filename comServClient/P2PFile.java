@@ -2,7 +2,7 @@ package comServClient;
 
 import java.io.*;
 
-public class P2PFile implements Comparable<P2PFile> {
+public class P2PFile implements Comparable<P2PFile>, Serializable {
     private File file;
     private long taille;
     

@@ -1,5 +1,6 @@
 package client;
 
+import comServClient.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -42,7 +43,7 @@ public class P2PClient {
         try {
             sockComm = new Socket(ipServ, portServ);
             oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
-            oos.writeObject(repertoire);
+            oos.writeObject(new ListFile(lfc.getFileList()));
             oos.flush();
             ois = new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
             InputStreamReader isr = new InputStreamReader(System.in);

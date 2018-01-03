@@ -5,10 +5,10 @@ import java.io.*;
 import java.util.*;
 
 public class ListFileClient {
-    private TreeSet<P2PFile> fileList;
+    private ArrayList<P2PFile> fileList;
     
     public ListFileClient(File folder) {
-        fileList = new TreeSet<P2PFile>();
+        fileList = new ArrayList<P2PFile>();
         listFilesFolder(folder);
     }
     
@@ -29,7 +29,7 @@ public class ListFileClient {
         }
     }
     
-    public TreeSet<P2PFile> getFileList() {
+    public ArrayList<P2PFile> getFileList() {
         return fileList;
     }
 }

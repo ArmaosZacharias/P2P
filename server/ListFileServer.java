@@ -1,6 +1,6 @@
 package server;
 
-import comServClient.P2PFile;
+import comServClient.*;
 import java.util.*;
 import java.io.*;
 
@@ -12,27 +12,22 @@ public class ListFileServer {
         //Chaque sous-liste de la liste listClientFichier a pour premier attribut le fichier (P2PFile) et les atributs suivants sont la liste des personnes ayant le fichier
     }
     
-    public void addFiles(String ip, File rep) {
-        for (File f : rep.listFiles()) {
-            if (f.isDirectory()) {
-                addFiles(ip, f);
+    public void addFiles(String ip, ListFile files) {
+        for (P2PFile f : files.getFileList()) {
+            int contient=-1;
+            for(int i=0;i<listClientFichier.size();i++){
+                if(((P2PFile)((ArrayList)listClientFichier.get(i)).get(0)).equals(f)){
+                    contient=i;
+                }
+            }
+            if(contient==-1){
+                ArrayList ipAndFile = new ArrayList();
+                ipAndFile.add(f);                    
+                ipAndFile.add(ip);
+                listClientFichier.add(ipAndFile);
             }
             else{
-                int contient=-1;
-                for(int i=0;i<listClientFichier.size();i++){
-                    if(((P2PFile)((ArrayList)listClientFichier.get(i)).get(0)).equals(new P2PFile(f))){
-                        contient=i;
-                    }
-                }
-                if(contient==-1){
-                    ArrayList ipAndFile = new ArrayList();
-                    ipAndFile.add(new P2PFile(f));                    
-                    ipAndFile.add(ip);
-                    listClientFichier.add(ipAndFile);
-                }
-                else{
-                    ((ArrayList)listClientFichier.get(contient)).add(ip);
-                }
+                ((ArrayList)listClientFichier.get(contient)).add(ip); 
             }
         }
     }
