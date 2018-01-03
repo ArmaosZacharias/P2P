@@ -40,11 +40,17 @@ public class ThreadServer extends Thread {
                         String requeteTab [] = requete.split(" ");
 
                         if (requeteTab[0].equals("search")) {
-                            String pattern = requeteTab[1];
-                            resultatSearch=lfs.chercherList(pattern);
-                            oos.writeInt(4); //renvoie le cas "list"
-                            oos.writeUTF(resultatSearch);
-                            oos.flush();
+                            try{
+                                String pattern = requeteTab[1];
+                                resultatSearch=lfs.chercherList(pattern);
+                                oos.writeInt(4); //renvoie le cas "list"
+                                oos.writeUTF(resultatSearch);
+                                oos.flush();
+                            }
+                            catch(ArrayIndexOutOfBoundsException e){
+                                oos.writeInt(1);  //renvoie le cas "help"
+                                oos.flush();
+                            }
                         } else if (requeteTab[0].equals("get")) {
                             if (resultatSearch!=null) {
                                 try {
