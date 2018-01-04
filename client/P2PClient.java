@@ -48,11 +48,11 @@ public class P2PClient {
             ois = new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
             InputStreamReader isr = new InputStreamReader(System.in);
             BufferedReader br = new BufferedReader(isr);
-
+            boolean quit=false;
             do {
                 System.out.println("Entrer votre requête : ");
                 requete = br.readLine();
-                if (requete.length() != 0){
+                if (!quit){
                     try {
                         oos.writeUTF(requete);
                         oos.flush();
@@ -64,9 +64,9 @@ public class P2PClient {
                             System.out.println("Veuillez d'abord effectuer un search");
                         } else if(reponse==3){   //cas 'quit'
                             System.out.println("Vous quittez l'application...");
+                            quit=true;
                             oos.writeObject(new ListFile(lfc.getFileList()));
                             oos.flush();
-                            System.exit(3);
                         } else if(reponse==4){ //cas 'list'
                             System.out.println(ois.readUTF());
                         } else if(reponse==5){  //cas 'local list'
@@ -78,12 +78,23 @@ public class P2PClient {
                     } catch(IOException e){
                         System.out.println(e.getMessage());
                     }
-                } else {
-                    System.out.println("Requête vide.");
                 }
-            } while (requete.length() != 0);
+            } while (!quit);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally{
+            try {
+                if (sockConn != null) {
+                    sockConn.close();
+                }
+                if(sockComm!=null){
+                    sockComm.close();
+                }
+            } catch(IOException e) {
+                e.printStackTrace();
+                System.out.println("Erreur IO2");
+            }
         }
     }
 }
