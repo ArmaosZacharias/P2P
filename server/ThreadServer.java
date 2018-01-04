@@ -26,10 +26,11 @@ public class ThreadServer extends Thread {
             os = sockComm.getOutputStream();
             oos = new ObjectOutputStream(new BufferedOutputStream(os));
             oos.flush();
+            AddressServerTcp ast=new AddressServerTcp(sockComm);
             String resultatSearch = null;
             try{
                 
-                lfs.addFiles(sockComm.getInetAddress().getHostAddress()+":"+sockComm.getPort(), (ListFile)ois.readObject());
+                lfs.addFiles(ast, (ListFile)ois.readObject());
                 boolean fin = false;
 
                 while (!fin) {
@@ -83,7 +84,7 @@ public class ThreadServer extends Thread {
                         } else if (requeteTab[0].equals("quit")) {
                             oos.writeInt(3);  //renvoie le cas "quit"
                             oos.flush();
-                            lfs.delFiles(sockComm.getInetAddress().getHostAddress()+":"+sockComm.getPort(), (ListFile)ois.readObject());
+                            lfs.delFiles(ast, (ListFile)ois.readObject());
                         } else {
                             oos.writeInt(1);  //renvoie le cas "help"
                             oos.flush();
