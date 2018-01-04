@@ -36,7 +36,7 @@ public class ThreadServer extends Thread {
                 while (!fin) {
                     try {
                         String requete = ois.readUTF();
-                        System.out.println("DEBUG: réception de la requete: " + requete);
+                        System.out.println("DEBUG: réception de la requete: " + requete+" par "+ast.toString());
                         String requeteTab [] = requete.split(" ");
 
                         if (requeteTab[0].equals("search")) {

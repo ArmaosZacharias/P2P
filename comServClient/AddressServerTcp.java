@@ -1,8 +1,8 @@
 package comServClient;
 import java.net.*;
+import java.io.*;
 
-
-public class AddressServerTcp {
+public class AddressServerTcp implements Serializable{
     private String adresse;
     private int port;
     
