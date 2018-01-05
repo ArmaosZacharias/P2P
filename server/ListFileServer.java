@@ -63,5 +63,17 @@ public class ListFileServer {
         }
         return res;
     }
+    
+    public ArrayList<AddressServerTcp> getPaires(int n){
+        ArrayList<AddressServerTcp> p=new ArrayList<AddressServerTcp>();
+        if(n>=listClientFichier.size()){
+            return null;
+        } else{
+            for(int i=1;i<((ArrayList)listClientFichier.get(n)).size();i++){
+                p.add(((AddressServerTcp)((ArrayList)listClientFichier.get(n)).get(i)));
+            }
+            return p;
+        }
+    }
 }
 

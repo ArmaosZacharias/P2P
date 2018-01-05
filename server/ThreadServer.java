@@ -55,7 +55,22 @@ public class ThreadServer extends Thread {
                             if (resultatSearch!=null) {
                                 try {
                                     int num = Integer.parseInt(requeteTab[1]);
+                                    ArrayList<AddressServerTcp> paires=lfs.getPaires(num);
+                                    if(paires==null){
+                                        oos.writeInt(1);  //renvoie le cas "help"
+                                        oos.flush();
+                                    }
+                                    else{
+                                        oos.writeInt(6);  //renvoie le cas "get"
+                                        oos.flush();
+                                        oos.writeObject(paires);
+                                        oos.flush();
+                                    }
                                 } catch (NumberFormatException e) {
+                                    oos.writeInt(1);  //renvoie le cas "help"
+                                    oos.flush();
+                                }
+                                catch(ArrayIndexOutOfBoundsException e){
                                     oos.writeInt(1);  //renvoie le cas "help"
                                     oos.flush();
                                 }
@@ -78,9 +93,21 @@ public class ThreadServer extends Thread {
                                 oos.writeInt(2);  //renvoie le cas "search first"
                                 oos.flush();
                             }
-                        } else if (requeteTab[0].equals("local") && requeteTab[1].equals("list")) {
-                            oos.writeInt(5);  //renvoie le cas "local list"
-                            oos.flush();
+                        } else if (requeteTab[0].equals("local")) {
+                            try{
+                                if(requeteTab[1].equals("list")){
+                                    oos.writeInt(5);  //renvoie le cas "local list"
+                                    oos.flush();
+                                }
+                                else{
+                                    oos.writeInt(1);  //renvoie le cas "help"
+                                    oos.flush();
+                                }
+                            }
+                            catch(ArrayIndexOutOfBoundsException e){
+                                oos.writeInt(1);  //renvoie le cas "help"
+                                oos.flush();
+                            }
                         } else if (requeteTab[0].equals("quit")) {
                             oos.writeInt(3);  //renvoie le cas "quit"
                             oos.flush();

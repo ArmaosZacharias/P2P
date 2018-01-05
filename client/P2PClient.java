@@ -2,8 +2,8 @@ package client;
 
 import comServClient.*;
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
+import java.util.*;
 
 public class P2PClient {
     
@@ -59,7 +59,7 @@ public class P2PClient {
                         
                         int reponse = ois.readInt();
                         if(reponse == 1){   //cas 'help'
-                            System.out.println("Commande inconnue, essayez : \n- 'search <pattern>' pour récupérer la liste des fichiers dont le nom contient <pattern>\n- 'get <num>' pour télécharger le fichier numéro <num> de la liste obtenue vià le search\n - 'list' permet d'afficher la liste courante\n - 'local list' permet d'afficher la liste de vos fichiers");
+                            System.out.println("Commande inconnue, essayez : \n- 'search <pattern>' pour récupérer la liste des fichiers dont le nom contient <pattern>\n- 'get <num>' pour télécharger le fichier numéro <num> de la liste obtenue vià le search\n - 'list' permet d'afficher la liste courante\n - 'local list' permet d'afficher la liste de vos fichiers\n - 'quit' vous permet de quitter");
                         } else if(reponse==2){   //cas 'search first'
                             System.out.println("Veuillez d'abord effectuer un search");
                         } else if(reponse==3){   //cas 'quit'
@@ -71,7 +71,15 @@ public class P2PClient {
                             System.out.println(ois.readUTF());
                         } else if(reponse==5){  //cas 'local list'
                             lfc.afficherList();
-                        } 
+                        } else if(reponse==6){  //cas 'get'
+                            try{
+                                ArrayList<AddressServerTcp> paires=(ArrayList<AddressServerTcp>)ois.readObject();
+                                System.out.println(paires.toString());
+                            }
+                            catch(ClassNotFoundException e){
+                                e.printStackTrace();
+                            }
+                        }
                         else{
                             System.out.println("Erreur, réessayer");
                         }
