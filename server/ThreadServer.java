@@ -61,10 +61,15 @@ public class ThreadServer extends Thread {
                                         oos.flush();
                                     }
                                     else{
-                                        oos.writeInt(6);  //renvoie le cas "get"
-                                        oos.flush();
-                                        oos.writeObject(paires);
-                                        oos.flush();
+                                        if(paires.contains(ast)){
+                                            oos.writeInt(7);  //le client a déjà le fichier
+                                            oos.flush();
+                                        } else {
+                                            oos.writeInt(6);  //renvoie le cas "get"
+                                            oos.flush();
+                                            oos.writeObject(paires);
+                                            oos.flush();
+                                        }
                                     }
                                 } catch (NumberFormatException e) {
                                     oos.writeInt(1);  //renvoie le cas "help"

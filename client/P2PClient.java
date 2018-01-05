@@ -79,6 +79,8 @@ public class P2PClient {
                             catch(ClassNotFoundException e){
                                 e.printStackTrace();
                             }
+                        } else if(reponse==7){
+                            System.out.println("Vous possédez déjà ce fichier");
                         }
                         else{
                             System.out.println("Erreur, réessayer");
