@@ -43,6 +43,7 @@ public class P2PClient {
         try {
             sockConn=new ServerSocket(0);
             ThreadClient tc=new ThreadClient(sockConn);
+            tc.start();
             sockComm = new Socket(ipServ, portServ);
             oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
             oos.writeObject(new ListFile(lfc.getFileList()));

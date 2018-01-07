@@ -16,7 +16,8 @@ public class ThreadClient extends Thread{
             Socket sockComm=new Socket();
             while (true) {
                 sockComm = sockConn.accept();
-                
+                ThreadSender ts=new ThreadSender(sockComm);
+                ts.start();
             }
         } catch(IOException e) {
             e.printStackTrace();
