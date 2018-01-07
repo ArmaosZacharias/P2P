@@ -77,7 +77,11 @@ public class P2PClient {
                         } else if(reponse==6){  //cas 'get'
                             try{
                                 ArrayList<AddressServerTcp> paires=(ArrayList<AddressServerTcp>)ois.readObject();
-                                System.out.println(paires.toString());
+                                //System.out.println(paires.toString());
+                                for(AddressServerTcp address : paires){
+                                    ThreadReceiver tr=new ThreadReceiver(address);
+                                    tr.start();
+                                }
                             }
                             catch(ClassNotFoundException e){
                                 e.printStackTrace();
