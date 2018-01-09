@@ -4,6 +4,7 @@ import comServClient.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import static java.lang.Math.*;
 
 public class P2PClient {
     
@@ -78,9 +79,18 @@ public class P2PClient {
                             try{
                                 ArrayList<AddressServerTcp> paires=(ArrayList<AddressServerTcp>)ois.readObject();
                                 P2PFile f=(P2PFile)ois.readObject();
+                                int dernierMorceau=toIntExact(f.getTaille()%1024);
+                                int k=toIntExact((f.getTaille()/1024));
+                                if(dernierMorceau>0)k++;
+                                int nbMorceauxParClient=k/paires.size();
+                                int debutMorceau=0;
+                                int finMorceau=nbMorceauxParClient-1;
                                 for(AddressServerTcp address : paires){
-                                    ThreadReceiver tr=new ThreadReceiver(address);
+                                    if(address.equals(paires.get(paires.size()-1)))finMorceau=k-1;
+                                    ThreadReceiver tr=new ThreadReceiver(address, f, debutMorceau, finMorceau);
                                     tr.start();
+                                    debutMorceau+=nbMorceauxParClient;
+                                    finMorceau+=nbMorceauxParClient;
                                 }
                             }
                             catch(ClassNotFoundException e){
