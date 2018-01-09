@@ -7,9 +7,9 @@ import comServClient.*;
 public class ThreadReceiver extends Thread{
     AddressServerTcp address;
     P2PFile leFichier;
-    int debutMorceau, finMorceau;
+    long debutMorceau, finMorceau;
     
-    public ThreadReceiver(AddressServerTcp add, P2PFile fic, int d, int f){
+    public ThreadReceiver(AddressServerTcp add, P2PFile fic, long d, long f){
         address=add;
         leFichier=fic;
         debutMorceau=d;

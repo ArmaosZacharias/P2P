@@ -81,12 +81,12 @@ public class P2PClient {
                             try{
                                 ArrayList<AddressServerTcp> paires=(ArrayList<AddressServerTcp>)ois.readObject();
                                 P2PFile f=(P2PFile)ois.readObject();
-                                int dernierMorceau=toIntExact(f.getTaille()%1024);
-                                int k=toIntExact((f.getTaille()/1024));
+                                long dernierMorceau=f.getTaille()%1024;
+                                long k=f.getTaille()/1024;
                                 if(dernierMorceau>0)k++;
-                                int nbMorceauxParClient=k/paires.size();
-                                int debutMorceau=0;
-                                int finMorceau=nbMorceauxParClient-1;
+                                long nbMorceauxParClient=k/paires.size();
+                                long debutMorceau=0;
+                                long finMorceau=nbMorceauxParClient-1;
                                 for(AddressServerTcp address : paires){
                                     if(address.equals(paires.get(paires.size()-1)))finMorceau=k-1;
                                     ThreadReceiver tr=new ThreadReceiver(address, f, debutMorceau, finMorceau);
