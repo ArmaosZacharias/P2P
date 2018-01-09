@@ -26,10 +26,10 @@ public class ThreadServer extends Thread {
             os = sockComm.getOutputStream();
             oos = new ObjectOutputStream(new BufferedOutputStream(os));
             oos.flush();
-            AddressServerTcp ast=new AddressServerTcp(sockComm);
+            AddressServerTcp ast;
             String resultatSearch = null;
             try{
-                
+                ast=new AddressServerTcp(sockComm.getInetAddress().getHostAddress(), ois.readInt());
                 lfs.addFiles(ast, (ListFile)ois.readObject());
                 boolean fin = false;
 

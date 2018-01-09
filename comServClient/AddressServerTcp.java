@@ -6,9 +6,9 @@ public class AddressServerTcp implements Serializable{
     private String adresse;
     private int port;
     
-    public AddressServerTcp(Socket s){
-        adresse=s.getInetAddress().getHostAddress();
-        port=s.getPort();
+    public AddressServerTcp(String ip, int p){
+        adresse=ip;
+        port=p;
     }
     
     public String toString(){
@@ -18,4 +18,7 @@ public class AddressServerTcp implements Serializable{
     public boolean equals(AddressServerTcp ast){
         return this.toString().equals(ast.toString());
     }
+    
+    public String getAdresse(){ return adresse; }
+    public int getPort(){ return port; }
 }

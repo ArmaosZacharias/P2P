@@ -11,6 +11,6 @@ public class ThreadSender extends Thread{
     }
     
     public void run(){
-        
+        System.out.println("DEBUG : Connexion du client "+sockComm.getInetAddress().getHostAddress());
     }
 }
