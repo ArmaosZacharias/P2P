@@ -55,6 +55,7 @@ public class ThreadServer extends Thread {
                             if (resultatSearch!=null) {
                                 try {
                                     int num = Integer.parseInt(requeteTab[1]);
+                                    P2PFile f=lfs.getFile(num);
                                     ArrayList<AddressServerTcp> paires=lfs.getPaires(num);
                                     if(paires==null){
                                         oos.writeInt(1);  //renvoie le cas "help"
@@ -68,6 +69,8 @@ public class ThreadServer extends Thread {
                                             oos.writeInt(6);  //renvoie le cas "get"
                                             oos.flush();
                                             oos.writeObject(paires);
+                                            oos.flush();
+                                            oos.writeObject(f);
                                             oos.flush();
                                         }
                                     }

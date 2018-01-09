@@ -75,5 +75,9 @@ public class ListFileServer {
             return p;
         }
     }
+    
+    public P2PFile getFile(int numero){
+        return (P2PFile)((ArrayList)listClientFichier.get(numero)).get(0);
+    }
 }
 
