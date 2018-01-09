@@ -19,13 +19,26 @@ public class ThreadSender extends Thread{
             leFichier=(P2PFile)ois.readObject();
             debutMorceau=ois.readLong();
             finMorceau=ois.readLong();
-            System.out.println("TEST");
+            if(sockComm!=null){
+                sockComm.close();
+            }
+            
+            
         }
         catch(IOException e){
             e.printStackTrace();
         }
         catch(ClassNotFoundException e){
             e.printStackTrace();
+        }
+        finally{
+            try {
+                if(sockComm!=null){
+                    sockComm.close();
+                }
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
