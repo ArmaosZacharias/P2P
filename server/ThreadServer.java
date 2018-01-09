@@ -29,10 +29,11 @@ public class ThreadServer extends Thread {
             AddressServerTcp ast;
             String resultatSearch = null;
             try{
+                
                 ast=new AddressServerTcp(sockComm.getInetAddress().getHostAddress(), ois.readInt());
                 lfs.addFiles(ast, (ListFile)ois.readObject());
                 boolean fin = false;
-
+                
                 while (!fin) {
                     try {
                         String requete = ois.readUTF();
