@@ -20,6 +20,14 @@ public class ThreadReceiver extends Thread{
         Socket sockComm=null;
         try{
             sockComm=new Socket(address.getAdresse(), address.getPort());
+            
+            ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(sockComm.getOutputStream()));
+            oos.writeObject(leFichier);
+            oos.flush();
+            oos.writeLong(debutMorceau);
+            oos.flush();
+            oos.writeLong(finMorceau);
+            oos.flush();
         }
         catch(IOException e){
             e.printStackTrace();

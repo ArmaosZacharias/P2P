@@ -2,6 +2,7 @@ package client;
 
 import java.io.*;
 import java.net.*;
+import comServClient.*;
 
 public class ThreadSender extends Thread{
     Socket sockComm;
@@ -11,6 +12,20 @@ public class ThreadSender extends Thread{
     }
     
     public void run(){
-        System.out.println("DEBUG : Connexion du client "+sockComm.getInetAddress().getHostAddress());
+        long debutMorceau, finMorceau;
+        P2PFile leFichier;
+        try{
+            ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(sockComm.getInputStream()));
+            leFichier=(P2PFile)ois.readObject();
+            debutMorceau=ois.readLong();
+            finMorceau=ois.readLong();
+            System.out.println("TEST");
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 }
