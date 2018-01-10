@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * envoie a destination de la socket UDP les morceaux de fichiers
+ * Envoie a destination de la socket UDP les morceaux de fichiers
  */
 
 public class ThreadSender extends Thread{

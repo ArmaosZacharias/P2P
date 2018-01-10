@@ -4,14 +4,14 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Argument à entrer en ligne de commande:
- * - numero de port d'attachement de la socket d'ecoute UDP
+ * Argument a entrer en ligne de commande:</br>
+ * - numero de port d'attachement de la socket d'ecoute UDP</br>
  *
- * - gere simultanement les requetes de plusieurs P2PClients (multithreadee)
- * - gere la validite des arguments transmis
- * - creer une socket d'écoute TCP (avec le numero de port d'attachement transmis en argument)
- * - gere la liste des fichiers disponibles sur les hôtes des differents P2PClients qui lui sont connectes
- * - chaque fichier est associe à la liste d'adresses de P2PClient (via ListFilesServer)
+ * - gere simultanement les requetes de plusieurs P2PClients (multithreadee)</br>
+ * - gere la validite des arguments transmis</br>
+ * - creer une socket d'écoute TCP (avec le numero de port d'attachement transmis en argument)</br>
+ * - gere la liste des fichiers disponibles sur les hôtes des differents P2PClients qui lui sont connectes</br>
+ * - chaque fichier est associe à la liste d'adresses de P2PClient (via ListFilesServer)</br>
  */
 
 public class P2PServer {

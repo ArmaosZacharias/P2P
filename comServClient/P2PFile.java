@@ -4,11 +4,11 @@ package comServClient;
 import java.io.*;
 
 /**
- * represente un fichier caracterise par un nom et une taille
+ * Represente un fichier caracterise par un nom et une taille</br>
  *
- * doit redefinir:
- * - equals()
- * - hashcode()
+ * Doit redefinir:</br>
+ * - equals()</br>
+ * - hashcode()</br>
  */
 
 public class P2PFile implements Comparable<P2PFile>, Serializable {

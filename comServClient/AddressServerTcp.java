@@ -4,13 +4,13 @@ package comServClient;
 import java.io.Serializable;
 
 /**
- * représente une adresse P2PClient caracterise par:
- * - IP de l'hote de l'app.
- * - numero de port de sa socket d'ecoute
+ * Représente une adresse P2PClient caracterise par:</br>
+ * - IP de l'hote de l'app.</br>
+ * - numero de port de sa socket d'ecoute</br>
  *
- * doit redefinir:
- * - equals()
- * - hashcode()
+ * Doit redefinir:</br>
+ * - equals()</br>
+ * - hashcode()</br>
  */
 
 public class AddressServerTcp implements Serializable{

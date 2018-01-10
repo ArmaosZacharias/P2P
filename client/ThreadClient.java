@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * accepte les demandes de connexion des autres P2PClients sur la socket d'ecoute
+ * Accepte les demandes de connexion des autres P2PClients sur la socket d'ecoute
  */
 
 public class ThreadClient extends Thread{

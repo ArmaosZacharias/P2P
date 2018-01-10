@@ -6,11 +6,11 @@ import comServClient.*;
 import java.util.*;
 
 /**
- * liste d'adresses des P2PClients
+ * Liste d'adresses des P2PClients</br>
  *
- * attributs et methodes permettant de faciliter la construction des réponses aux requetes de recherche et de telechargement
+ * Attributs et methodes permettant de faciliter la construction des réponses aux requetes de recherche et de telechargement</br>
  *
- * constitue une donnee partage entre les differents threads qui gerent les echanges de messages avec les P2PClients connectes
+ * Constitue une donnee partage entre les differents threads qui gerent les echanges de messages avec les P2PClients connectes</br>
  */
 
 public class ListFileServer {
