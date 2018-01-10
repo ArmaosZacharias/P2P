@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Liste d'adresses des P2PClients</br>
  *
- * Attributs et methodes permettant de faciliter la construction des réponses aux requetes de recherche et de telechargement</br>
+ * Attributs et methodes permettant de faciliter la construction des reponses aux requetes de recherche et de telechargement</br>
  *
  * Constitue une donnee partage entre les differents threads qui gerent les echanges de messages avec les P2PClients connectes</br>
  */

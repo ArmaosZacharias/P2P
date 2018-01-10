@@ -4,7 +4,7 @@ package comServClient;
 import java.io.Serializable;
 
 /**
- * Représente une adresse P2PClient caracterise par:</br>
+ * Represente une adresse P2PClient caracterise par:</br>
  * - IP de l'hote de l'app.</br>
  * - numero de port de sa socket d'ecoute</br>
  *

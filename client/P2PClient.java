@@ -29,8 +29,8 @@ import java.util.*;
  * - attends que l'utilisateur entre une requete</br>
  *
  * Requetes:</br>
- * - search "<pattern>"</br>
- * - get "<num>"</br>
+ * - search &lt;pattern&gt</br>
+ * - get &lt;num&gt</br>
  * - list</br>
  * - local list</br>
  * - quit</br>
