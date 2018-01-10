@@ -4,6 +4,10 @@ package client;
 import java.io.*;
 import java.net.*;
 
+/**
+ * accepte les demandes de connexion des autres P2PClients sur la socket d'ecoute
+ */
+
 public class ThreadClient extends Thread{
     private ServerSocket sockConn = null;
 

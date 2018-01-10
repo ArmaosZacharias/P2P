@@ -3,6 +3,14 @@ package comServClient;
 
 import java.io.*;
 
+/**
+ * represente un fichier caracterise par un nom et une taille
+ *
+ * doit redefinir:
+ * - equals()
+ * - hashcode()
+ */
+
 public class P2PFile implements Comparable<P2PFile>, Serializable {
     private File file;
     private long taille;

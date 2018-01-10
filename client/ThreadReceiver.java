@@ -6,6 +6,10 @@ import comServClient.*;
 import java.io.*;
 import java.net.*;
 
+/**
+ * recoit les morceaux de fichiers
+ */
+
 public class ThreadReceiver extends Thread{
     AddressServerTcp address;
     P2PFile leFichier;

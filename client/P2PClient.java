@@ -8,36 +8,36 @@ import java.net.*;
 import java.util.*;
 
 /**
- * Arguments à entrer en ligne de commande:
- * - IP de l'hôte du P2PServer
- * - numéro de port de la socket d'écoute TCP du P2PServer
- * - chemin vers le répertoire contenant les fichiers du P2PServer
+ * Arguments a entrer en ligne de commande:
+ * - IP de l'hote du P2PServer
+ * - numero de port de la socket d'écoute TCP du P2PServer
+ * - chemin vers le repertoire contenant les fichiers du P2PServer
  *
- * - numéro de port de cette socket d'écoute: choisi automatiquement par le système de l'hôte qui l'héberge (mettre 0 en paramètre dans le ServerSocket)
+ * - numero de port de cette socket d'ecoute: choisi automatiquement par le systeme de l'hete qui l'heberge (mettre 0 en parametre dans le ServerSocket)
  *
- * - test la validité des arguments
- * - détermine l'IP de l'hôte qui l'héberge
- * - ouvre le répertoire (voir chemin en argument) pour lister ce qu'il contient: constitue la liste des fichiers possédé par l'app.
- * - créé une socket d'écoute TCP (avec paramètre 0)
- * - se connecte au P2PServer avec adresse en argument (la connexion reste ouverte jusqu'à la fin du P2PClient)
- * - créé un thread (ThreadClient) destiné à accepter les demandes de connexion des autres P2PClients sur la socket d'écoute créée
- * - démarrer le thread
- * - transmet au P2PServer la liste de fichiers qu'elle possède
+ * - test la validite des arguments
+ * - determine l'IP de l'hete qui l'heberge
+ * - ouvre le repertoire (voir chemin en argument) pour lister ce qu'il contient: constitue la liste des fichiers possede par l'app.
+ * - cree une socket d'ecoute TCP (avec parametre 0)
+ * - se connecte au P2PServer avec adresse en argument (la connexion reste ouverte jusqu'e la fin du P2PClient)
+ * - cree un thread (ThreadClient) destine à accepter les demandes de connexion des autres P2PClients sur la socket d'ecoute creee
+ * - demarrer le thread
+ * - transmet au P2PServer la liste de fichiers qu'elle possede
  *
  * Ensuite, entre dans le mode interface avec l'utilisateur:
  * - affiche le menu
- * - attends que l'utilisateur entre une requête
+ * - attends que l'utilisateur entre une requete
  *
- * Requêtes:
+ * Requetes:
  * - search <pattern>
  * - get <num>
  * - list
  * - local list
  * - quit
  *
- * get <num>: doit vérifier si elle possède déjç le fichier ciblé
+ * get <num>: doit verifier si elle possede déja le fichier cible
  * (si oui, recoit la liste les adresses de P2PClient avec le fichier,
- * si non, envoie une requete de téléchargement au P2PServer)
+ * si non, envoie une requete de telechargement au P2PServer)
  */
 
 public class P2PClient {

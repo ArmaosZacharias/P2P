@@ -5,6 +5,14 @@ import comServClient.*;
 
 import java.util.*;
 
+/**
+ * liste d'adresses des P2PClients
+ *
+ * attributs et methodes permettant de faciliter la construction des réponses aux requetes de recherche et de telechargement
+ *
+ * constitue une donnee partage entre les differents threads qui gerent les echanges de messages avec les P2PClients connectes
+ */
+
 public class ListFileServer {
     private ArrayList listClientFichier;
     
