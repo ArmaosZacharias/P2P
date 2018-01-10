@@ -120,9 +120,9 @@ public class P2PClient {
                                 if(dernierMorceau>0)k++;
                                 long nbMorceauxParClient=k/paires.size();
                                 long debutMorceau=0;
-                                long finMorceau=nbMorceauxParClient-1;
+                                long finMorceau=nbMorceauxParClient;
                                  for(AddressServerTcp address : paires){
-                                    if(address.equals(paires.get(paires.size()-1)))finMorceau=k-1;
+                                    if(address.equals(paires.get(paires.size()-1)))finMorceau=k;
                                     ThreadReceiver tr=new ThreadReceiver(address, f, debutMorceau, finMorceau);
                                     tr.start();
                                     debutMorceau+=nbMorceauxParClient;
