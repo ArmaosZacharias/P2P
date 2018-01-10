@@ -1,10 +1,44 @@
+// Alexis Armaos - Hélène Zacharias
 package client;
 
 import comServClient.*;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import static java.lang.Math.*;
+
+/**
+ * Arguments à entrer en ligne de commande:
+ * - IP de l'hôte du P2PServer
+ * - numéro de port de la socket d'écoute TCP du P2PServer
+ * - chemin vers le répertoire contenant les fichiers du P2PServer
+ *
+ * - numéro de port de cette socket d'écoute: choisi automatiquement par le système de l'hôte qui l'héberge (mettre 0 en paramètre dans le ServerSocket)
+ *
+ * - test la validité des arguments
+ * - détermine l'IP de l'hôte qui l'héberge
+ * - ouvre le répertoire (voir chemin en argument) pour lister ce qu'il contient: constitue la liste des fichiers possédé par l'app.
+ * - créé une socket d'écoute TCP (avec paramètre 0)
+ * - se connecte au P2PServer avec adresse en argument (la connexion reste ouverte jusqu'à la fin du P2PClient)
+ * - créé un thread (ThreadClient) destiné à accepter les demandes de connexion des autres P2PClients sur la socket d'écoute créée
+ * - démarrer le thread
+ * - transmet au P2PServer la liste de fichiers qu'elle possède
+ *
+ * Ensuite, entre dans le mode interface avec l'utilisateur:
+ * - affiche le menu
+ * - attends que l'utilisateur entre une requête
+ *
+ * Requêtes:
+ * - search <pattern>
+ * - get <num>
+ * - list
+ * - local list
+ * - quit
+ *
+ * get <num>: doit vérifier si elle possède déjç le fichier ciblé
+ * (si oui, recoit la liste les adresses de P2PClient avec le fichier,
+ * si non, envoie une requete de téléchargement au P2PServer)
+ */
 
 public class P2PClient {
     
@@ -86,9 +120,9 @@ public class P2PClient {
                                 if(dernierMorceau>0)k++;
                                 long nbMorceauxParClient=k/paires.size();
                                 long debutMorceau=0;
-                                long finMorceau=nbMorceauxParClient;
-                                for(AddressServerTcp address : paires){
-                                    if(address.equals(paires.get(paires.size()-1)))finMorceau=k;
+                                long finMorceau=nbMorceauxParClient-1;
+                                 for(AddressServerTcp address : paires){
+                                    if(address.equals(paires.get(paires.size()-1)))finMorceau=k-1;
                                     ThreadReceiver tr=new ThreadReceiver(address, f, debutMorceau, finMorceau);
                                     tr.start();
                                     debutMorceau+=nbMorceauxParClient;

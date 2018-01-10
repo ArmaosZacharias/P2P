@@ -1,8 +1,9 @@
+// Alexis Armaos - Hélène Zacharias
 package server;
 
 import comServClient.*;
+
 import java.util.*;
-import java.io.*;
 
 public class ListFileServer {
     private ArrayList listClientFichier;

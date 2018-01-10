@@ -1,8 +1,8 @@
+// Alexis Armaos - Hélène Zacharias
 package client;
 
-import comServClient.*;
-import java.net.*;
 import java.io.*;
+import java.net.*;
 
 public class ThreadClient extends Thread{
     private ServerSocket sockConn = null;

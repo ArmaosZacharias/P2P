@@ -1,6 +1,18 @@
 package server;
+
 import java.io.*;
 import java.net.*;
+
+/**
+ * Argument à entrer en ligne de commande:
+ * - numéro de port d'attachement de la socket d'écoute UDP
+ *
+ * - gère simultanément les requêtes de plusieurs P2PClients (multithreadée)
+ * - gère la validité des arguments transmis
+ * - créer une socket d'écoute TCP (avec le numéro de port d'attachement transmis en argument)
+ * - gère la liste des fichiers disponibles sur les hôtes des différents P2PClients qui lui sont connectés
+ * - chaque fichier est associé à la liste d'adresses de P2PClient (via ListFilesServer)
+ */
 
 public class P2PServer {
     public static void main(String[] args) {

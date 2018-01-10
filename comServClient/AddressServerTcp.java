@@ -1,6 +1,7 @@
+// Alexis Armaos - Hélène Zacharias
 package comServClient;
-import java.net.*;
-import java.io.*;
+
+import java.io.Serializable;
 
 public class AddressServerTcp implements Serializable{
     private String adresse;

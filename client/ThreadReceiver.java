@@ -1,8 +1,10 @@
+// Alexis Armaos - Hélène Zacharias
 package client;
+
+import comServClient.*;
 
 import java.io.*;
 import java.net.*;
-import comServClient.*;
 
 public class ThreadReceiver extends Thread{
     AddressServerTcp address;

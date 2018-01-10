@@ -1,8 +1,10 @@
+// Alexis Armaos - Hélène Zacharias
 package client;
+
+import comServClient.P2PFile;
 
 import java.io.*;
 import java.net.*;
-import comServClient.*;
 
 public class ThreadSender extends Thread{
     Socket sockComm;
